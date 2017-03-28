@@ -131,6 +131,8 @@ case 1:
             cin.ignore();
 
            Head my_head = Head(name, model_number, description, image_filename, power);
+           cout << endl;
+           cout << "***Head " << name << " was created***" << endl;
             break;
 }
 
@@ -153,6 +155,9 @@ case 2:
             cin.ignore();
 
            Arm my_arm = Arm(name, model_number, description, image_filename,max_power);
+
+            cout << endl;
+            cout << "**8Arm " << " was created***" << endl;
             break;
 }
 
@@ -179,6 +184,8 @@ case 3:
             cin.ignore();
 
            Battery my_battery = Battery(name, model_number, description, image_filename,power_available,max_energy);
+            cout << endl;
+            cout << "***Baterry " << name << " was created***" << endl;
             break;
 }
 case 4:
@@ -204,6 +211,8 @@ case 4:
             cin.ignore();
 
            Torso my_torso = Torso(name, model_number, description, image_filename,battery_compartments,max_arms);
+            cout << endl;
+            cout << "***Torso " << name << " was created***" << endl;
             break;
 }
 case 5:
@@ -225,6 +234,8 @@ case 5:
             cin.ignore();
 
            Locomotor my_locomotor = Locomotor(name, model_number, description, image_filename,max_power);
+            cout << endl;
+            cout << "***Locomotor " << name << " was created***" << endl;
             break;
 }
 
