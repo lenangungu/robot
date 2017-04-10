@@ -1,178 +1,35 @@
-using namespace std;
-#include<iostream>
-#include <string>
+#include <iostream>
 #include <vector>
-#include <sstream>
+#include "robot_part.h"
+#include "utility.h"
+using namespace std;
 
-class Robot_part
-{
-protected:
-    string name;
-    int model_number;
-    string description;
-    string image_filename;
-};
+int main() {
 
-class Head : public Robot_part
-{
-private:
-    double power;
-public:
-    Head(){}
-    Head(string name, int model_number, string description, string image_filename, double power)
-    {
-    name = name;
-    model_number = model_number;
-    description = description;
-    image_filename = image_filename;
-    power = power;
-    }
+  Head *head;
+  Arm *arm;
+  Torso *torso;
+  Locomotor *locomotor;
+  Battery *battery;
+  Robot_model *model;
+  Customer *customer;
+  Sale_associate *sale_associate;
+  Order *order;
+ \
+/*
+  while(true) {
+    switch (get_int(R"(
+   Testing Robot Parts
 
-    string get_name()
-    {
-   stringstream name_out;
-   name_out << name;
-   return name_out.str();
-    }
+(1) Create Head
+(2) Create Arm
+(3) Create Torso
+(4) Create Locomotor
+(5) Create Battery
+(0) Exit
 
-};
-
-class Arm : public Robot_part
-{
-private:
-    double max_power;
-
-public:
-Arm(){}
-    Arm(string name, int model_number, string description, string image_filename, double max_power)
-    {
-    name = name;
-    model_number = model_number;
-    description = description;
-    image_filename = image_filename;
-    max_power = max_power;
-    }
-string get_name()
-    {
-    stringstream name_out;
-   name_out << name;
-   return name_out.str();
-    }
-
-};
-class Battery : public Robot_part
-{
-private:
-    double power_available;
-    double max_energy;
-
-public:
-Battery(){}
-    Battery(string name, int model_number, string description, string image_filename, double power_available, double max_energy)
-    {
-    name = name;
-    model_number = model_number;
-    description = description;
-    image_filename = image_filename;
-    power_available = power_available;
-    max_energy = max_energy;
-    }
-string get_name()
-    {
-     stringstream name_out;
-   name_out << name;
-   return name_out.str();
-    }
-};
-class Torso : public Robot_part
-{
-private:
-    int battery_components;
-    int max_arms;
-
-public:
-    Torso(){}
-    Torso(string name, int model_number, string description, string image_filename, int battery_components, int max_arms)
-    {
-    name = name;
-    model_number = model_number;
-    description = description;
-    image_filename = image_filename;
-    battery_components = battery_components;
-    max_arms = max_arms;
-    }
-string get_name()
-    {
-    stringstream name_out;
-   name_out << name;
-   return name_out.str();
-    }
-};
-
-class Locomotor : public Robot_part
-{
-private:
-    double max_power;
-
-public:
-Locomotor(){}
-    Locomotor(string name, int model_number, string description, string image_filename, double max_power){
-    name = name;
-    model_number = model_number;
-    description = description;
-    image_filename = image_filename;
-    max_power = max_power;
-    }
-
- string get_name()
-    {
-     stringstream name_out;
-   name_out << name;
-   return name_out.str();
-    }
-};
-
-
-class Robot_model
-{
-protected:
-    string name;
-    int model_number;
-    Torso torso;
-    Head head;
-    Locomotor locomotor;
-    Arm arm;
-    Battery battery;
-
-public:
-    Robot_model(string name, int model_number, Head head, Torso torso, Arm arm, Locomotor locomotor, Battery battery)
-    {
-    name = name;
-
-    model_number = model_number;
-    torso = torso;
-    head = head;
-    locomotor = locomotor;
-    arm = arm;
-    battery = battery;
-    }
-
-    string get_model()
-    {
-      stringstream model_out;
-   model_out << "Model " << name << " " << "Number " << model_number << "With: " << torso.get_name() << "," << head.get_name() <<"," << arm.get_name() <<","<<battery.get_name()<<","<<locomotor.get_name()<<endl;
-   return model_out.str();
-    }
-    double cost();
-    double max_speed();
-    double max_battery_life();
-
-
-};
-
-int main ()
-
-{
+Selection? )", 0, 5)) {
+*/
 vector <Robot_model> models;
 vector<Head> heads;
 vector<Torso> torsos;
@@ -180,21 +37,21 @@ vector<Arm> arms;
 vector<Battery> batteries;
 vector<Locomotor> locomotors;
 
+int option;
+int part;
 string model_name;
 int model_number;
-string yes = "n";
-int option;
 do
 {
-
-cout << "1) Create a Model" << endl << "2) Create parts" << endl << "3) List models" << endl << "9 to exit" << endl;
+cout << "1) Create a Model" << endl << "2) Create parts" << endl << "3) List models" << endl << "4) Create a customer"<< endl<< "5) Create a sale associate" << endl<< "6) Create an order" <<endl<<"9) to exit" << endl;
 cin >> option;
 cin.ignore();
 
-switch(option)
+switch (option)
 {
 case 1:
-{
+
+
 cout << "Enter the Model's name" << endl;
 getline(cin,model_name);
 
@@ -209,7 +66,7 @@ cout << "Heads: " << endl;
 
 for (int i = 0; i < heads.size(); i++)
 {
-cout << i+1 << ")" << heads[i].get_name() << endl;
+cout << i+1 << ")" << heads[i] << endl;
 
 }
 cin >> head_i;
@@ -222,7 +79,7 @@ cout << "Torsos: " << endl;
 
 for (int i = 0; i < torsos.size(); i++)
 {
-cout << i+1 << ")" << torsos[i].get_name() << endl;
+cout << i+1 << ")" << torsos[i] << endl;
 
 }
 cin >> torso_i;
@@ -235,7 +92,7 @@ cout << "Arms: " << endl;
 
 for (int i = 0; i < arms.size(); i++)
 {
-cout << i+1 << ")" << arms[i].get_name() << endl;
+cout << i+1 << ")" << arms[i] << endl;
 
 }
 cin >> arm_i;
@@ -248,7 +105,7 @@ cout << "Batteries: " << endl;
 
 for (int i = 0; i < batteries.size(); i++)
 {
-cout << i+1 << ")" << batteries[i].get_name() << endl;
+cout << i+1 << ")" << batteries[i] << endl;
 
 }
 cin >> battery_i;
@@ -261,204 +118,185 @@ cout << "Locomotors: " << endl;
 
 for (int i = 0; i < locomotors.size(); i++)
 {
-cout << i+1 << ")" << locomotors[i].get_name() << endl;
+cout << i+1 << ")" << locomotors[i] << endl;
 
 }
 cin >> locomotor_i;
 cin.ignore();
 
 
-Robot_model model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
-models.push_back(model);
+ model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
+models.push_back(*model);
 
 break;
 
-}
+
+//
 
 case 2:
 {
 int part;
-
 cout << endl;
-cout << "1) Head" << endl << "2) Arm " << endl << "3) Battery" << endl << "4) Torso" << endl << "5) Locomotor" << endl;
+cout << "1) Head" << endl << "2) Arm " << endl << "3) Torso" << endl << "4) Locomotor" << endl << "5) Battery" << endl;
 cout << endl;
 cout << "What part do you want to create and add to the model? 0 to exit or to create another model" << endl;
 cin >> part;
 cin.ignore();
-
 switch (part)
 {
-do
+do{
+
+      case 0: // Exit
+        exit(0);
+      case 1: // Head
+        head = new Head{
+          get_string("Enter this head's name: "),
+          get_int("Enter this head's model number: "),
+          get_double("Enter this head's cost: "),
+          get_string("Enter description: "),
+          get_double("Enter this head's power: ")
+        };
+        cout << *head << endl;
+        heads.push_back(*head);
+        break;
+      case 2:
+        arm = new Arm{
+          get_string("Enter this arm's name: "),
+          get_int("Enter this arm's model number: "),
+          get_double("Enter this arm's cost: "),
+          get_string("Enter description: "),
+          get_double("Enter maximum power: ")
+        };
+        cout << *arm << endl;
+        arms.push_back(*arm);
+        break;
+      case 3:
+        torso = new Torso{
+          get_string("Enter this torso's name: "),
+          get_int("Enter this torso's model number: "),
+          get_double("Enter this torso's cost: "),
+          get_string("Enter description: "),
+          get_int("Enter maximum # of arms (0 to 2): ", 0, 2),
+          get_int("Enter maximum # of batteries (1 to 3): ", 1, 3)
+        };
+        cout << *torso << endl;
+        torsos.push_back(*torso);
+        break;
+      case 4:
+        locomotor = new Locomotor{
+          get_string("Enter this locomotor's name: "),
+          get_int("Enter this locomotor's model number: "),
+          get_double("Enter this locomotor's cost: "),
+          get_string("Enter description: "),
+          get_double("Enter maximum power: ")
+        };
+        cout << *locomotor << endl;
+        locomotors.push_back(*locomotor);
+        break;
+      case 5:
+        battery = new Battery{
+          get_string("Enter this battery's name: "),
+          get_int("Enter this battery's model number: "),
+          get_double("Enter this battery's cost: "),
+          get_string("Enter description: "),
+          get_double("Enter maximum energy: "),
+          get_double("Enter power available: ")
+        };
+        cout << *battery << endl;
+        batteries.push_back(*battery);
+        break;
+      default:
+        cerr << "Impossible menu selection ===" << endl << endl;
+
+  }while(part !=0);
+  }
+  break;
+  }
+
+  case 3:
+
+  {
+  cout << "List of models: " <<  endl;
+  for(int i =0; i<models.size();i++)
 {
-case 1:
-{
-            int model_number;
-            string name;
-            string description;
-            string image_filename;
-            int power;
-            cout << "Name the head" << endl;
-            getline(cin,name);
-            cout << "Model number?" << endl;
-            cin >> model_number;
-            cin.ignore();
-            cout << "Description?" << endl;
-            getline(cin,description);
-            cout << "Power? (in Watt)" << endl;
-            cin >> power;
-            cin.ignore();
-
-           //Head
-       Head my_head =  Head(name, model_number, description, image_filename, power);
-        heads.push_back(my_head);
-           cout << endl;
-           cout << "***Head " << name << " was created and added to " << model_name<< "****" << endl;
-            break;
-}
-
-case 2:
-{
-            int model_number;
-            string name;
-            string description;
-            string image_filename;
-            int max_power;
-            cout << "Name the arm" << endl;
-            getline(cin,name);
-            cout << "Model number?" << endl;
-            cin >> model_number;
-            cin.ignore();
-            cout << "Description?" << endl;
-            getline(cin,description);
-            cout << "Max Power? (in Watt)" << endl;
-            cin >> max_power;
-            cin.ignore();
-
-           //Arm
-          Arm my_arm =  Arm(name, model_number, description, image_filename,max_power);
-           arms.push_back(my_arm);
-            cout << endl;
-            cout << "***Arm " << " was created and added to " << model_name<< "****" << endl;
-            break;
-}
-
-case 3:
-{
-            int model_number;
-            string name;
-            string description;
-            string image_filename;
-            int power_available;
-            int max_energy;
-            cout << "Name the battery" << endl;
-            getline(cin,name);
-            cout << "Model number?" << endl;
-            cin >> model_number;
-            cin.ignore();
-            cout << "Description?" << endl;
-            getline(cin,description);
-            cout << "Power available? (in Watt)" << endl;
-            cin >> power_available;
-            cin.ignore();
-            cout << "Max energy? "<< endl;
-            cin >> max_energy;
-            cin.ignore();
-
-           //Battery
-         Battery my_battery = Battery(name, model_number, description, image_filename,power_available,max_energy);
-           batteries.push_back(my_battery);
-            cout << endl;
-            cout << "***Baterry " << name << " was created and added to " << model_name<< "****" << endl;
-            break;
-}
-case 4:
-{
-            int model_number;
-            string name;
-            string description;
-            string image_filename;
-            int battery_compartments;
-            int max_arms;
-            cout << "Name the torso" << endl;
-            getline(cin,name);
-            cout << "Model number?" << endl;
-            cin >> model_number;
-            cin.ignore();
-            cout << "Description?" << endl;
-            getline(cin,description);
-            cout << "How many battery compartment?" << endl;
-            cin >> battery_compartments;
-            cin.ignore();
-            cout << "Max arms "<< endl;
-            cin >> max_arms;
-            cin.ignore();
-
-           //Torso
-          Torso my_torso = Torso(name, model_number, description, image_filename,battery_compartments,max_arms);
-           torsos.push_back(my_torso);
-            cout << endl;
-            cout << "***Torso " << name << " was created and added to " << model_name<< "****" << endl;
-            break;
-}
-case 5:
-{
-            int model_number;
-            string name;
-            string description;
-            string image_filename;
-            double max_power;
-            cout << "Name the locomotor" << endl;
-            getline(cin,name);
-            cout << "Model number?" << endl;
-            cin >> model_number;
-            cin.ignore();
-            cout << "Description?" << endl;
-            getline(cin,description);
-            cout << "Max power? "<< endl;
-            cin >> max_power;
-            cin.ignore();
-
-           //Locomotor
-          Locomotor my_locomotor =  Locomotor(name, model_number, description, image_filename,max_power);
-           locomotors.push_back(my_locomotor);
-            cout << endl;
-            cout << "***Locomotor " << name << " was created and added to " << model_name<< "****" << endl;
-            break;
-}
-
-
-}while (part != 0);
-//create a model with all the given parts
-}
-
-break;
-}
-
-
-case 3:
-{
-cout << "List of models: " << endl;
-for(int i =0; i<models.size();i++)
-{
-models[i].get_model();
+cout << models[i];
+cout << endl;
 }
 cout << endl;
 break;
 }
 
+case 4:
+{
+
+string name;
+int customer_number;
+string phone_number;
+string email_address;
+cout << "What's your name?" << endl;
+getline(cin,name);
+
+cout << "Customer number?" << endl;
+cin >> customer_number;
+cin.ignore();
+cout<< "Phone number? "<<endl;
+getline(cin,phone_number);
+cout << "Email? " << endl;
+getline(cin,email_address);
+
+customer = new Customer(name,customer_number,phone_number,email_address);
+//customer
+break;
+}
+case 5:
+{
+string name;
+int employee_number;
+cout << "What's your name? "<<endl;
+getline(cin,name);
+cout << "Employee number? " << endl;
+cin >> employee_number;
+cin.ignore();
+
+sale_associate = new Sale_associate(name,employee_number);
+//sale associate
+break;
+}
+
+case 6:
+{
+int order_number;
+string date;
+
+int status;
+
+
+cin.ignore();
+cout << "date? "<< endl;
+getline(cin,date);
+cout<< "Choose customer: "<< endl;
+//get customers
+
+cout << "Choose associate" << endl;
+
+//diplay associate
+
+cout << "Choose robot model" << endl;
+//display modes
+
+cout << "How many of this model would you like? "<< endl;
+cin>>order_number;
+
+cout << "status? " << endl;
+cin >> status;
+cin.ignore();
+
+break;
+
+//order
 
 }
 
-}while(option != 9);
-
-
-
-return 0;
 }
-
-//g++ -o robot_parts robot_parts.cpp ./robot_parts
-// create Robot part class
-//implement the robot part class
-// create arm, head, locomotor, torso and battery classes
-// make each class inherit from robot part
-// provide additonal attribute to each class
+  }while(option != 9);
+}
