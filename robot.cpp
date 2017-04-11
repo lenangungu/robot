@@ -40,11 +40,102 @@ vector<Customer> customers;
 vector<Sale_associate> sale_associates;
 vector<Order> orders;
 ofstream ost;
+ifstream ist;
 
 int option;
 int part;
 string model_name;
 int model_number;
+
+ist.open("robot.txt");
+
+do{
+switch(get_int(ist))
+{
+case 9:
+{exit(0);}
+
+case 1:
+{
+string name = get_string(ist);
+int model_number = get_int(ist);
+head = new Head{
+get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist)};
+arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+
+model = new Robot_model{name,model_number,*head,*torso,*arm,*locomotor,*battery};
+models.push_back(*model);
+break;}
+case 2:
+{
+
+switch(get_int(ist))
+{
+case 1:{
+head = new Head{
+get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+heads.push_back(*head);
+break;}
+
+case 2: {
+arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+arms.push_back(*arm); break;}
+
+case 3:{
+torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist)};
+torsos.push_back(*torso); break;}
+
+case 4:{
+locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+locomotors.push_back(*locomotor);break;}
+
+case 5: {
+battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+batteries.push_back(*battery);break;}
+
+}
+break; //break of case 2
+}
+
+case 4:{
+customer = new Customer{get_string(ist),get_int(ist),get_string(ist),get_string(ist)};
+customers.push_back(*customer);break;}
+
+case 5:{
+sale_associate = new Sale_associate{get_string(ist),get_int(ist)};
+sale_associates.push_back(*sale_associate);break;}
+
+case 6:{
+int order_number = get_int(ist);
+string date = get_string(ist);
+customer = new Customer{get_string(ist),get_int(ist),get_string(ist),get_string(ist)};
+sale_associate = new Sale_associate{get_string(ist),get_int(ist)};
+string name = get_string(ist);
+int model_number = get_int(ist);
+head = new Head{
+get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist)};
+arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+
+model = new Robot_model{name,model_number,*head,*torso,*arm,*locomotor,*battery};
+
+
+int status = get_int(ist);
+order = new Order{order_number,date, *customer,*sale_associate,*model,status};
+orders.push_back(*order);
+break;}
+
+}
+}while(!ist.eof());
+ist.close();
+
+
+
 do
 {
 cout << "1) Create a Model" << endl << "2) Create parts" << endl << "3) List models" << endl << "4) Create a customer"<< endl<< "5) Create a sale associate" << endl<< "6) Create an order" <<endl<<"9) to exit" << endl;

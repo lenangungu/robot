@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 using namespace std;
 
 class Robot_part {
@@ -29,10 +30,17 @@ class Head : public Robot_part {
          double power)
        : Robot_part(description, cost, model_number, name),
          _power{power} { }
+/*
+    Head override (ifstream& ist){
+    (ist.open("robot.txt"));
+    ist >> _name; ist >> _model_number; ist >> _cost; ist >> _description; ist>> _power;
+    Head(_name,_model_number,_cost,_description,_power);
+    }*/
+
     double power() const {return _power;}
     void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _power << endl;
+    ost << "2"<<endl; ost <<"1"<<endl; ost<<_name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _power << endl;
     ost.close();
     }
 
@@ -60,7 +68,7 @@ class Locomotor : public Robot_part {
     double max_power() const {return _max_power;}
    void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
+    ost << "2"<<endl; ost <<"4"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
     ost.close();
     }
   private:
@@ -87,7 +95,7 @@ class Arm : public Robot_part {
     double max_power() const {return _max_power;}
    void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
+    ost << "2"<<endl; ost <<"2"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
     ost.close();
     }
   private:
@@ -117,7 +125,7 @@ class Torso : public Robot_part {
     int battery_compartments() const {return _battery_compartments;}
   void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_arms << endl; ost << _battery_compartments << endl;
+    ost << "2"<<endl; ost <<"3"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_arms << endl; ost << _battery_compartments << endl;
     ost.close();
     }
 
@@ -150,7 +158,7 @@ class Battery : public Robot_part {
     double power_available() const {return _power_available;}
   void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_energy << endl; ost <<_power_available <<endl;
+    ost << "2"<<endl; ost <<"5"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_energy << endl; ost <<_power_available <<endl;
     ost.close();
     }
 
@@ -185,7 +193,7 @@ class Robot_model {
 void save(ofstream& ost)
 {
 ost.open("robot.txt",ios_base::app);
-ost << _name << endl; ost << _model_number << endl; ost << _head <<endl; ost << _torso << endl; ost << _arm << endl; ost << _locomotor << endl; ost << _battery << endl;
+ost << "1"<<endl; ost << _name << endl; ost << _model_number << endl; ost << _head <<endl; ost << _torso << endl; ost << _arm << endl; ost << _locomotor << endl; ost << _battery << endl;
 }
   protected:
     string _name;
@@ -230,7 +238,7 @@ public:
 
     void save(ofstream& ost)
     {
-    ost << _name << endl; ost << _customer_number << endl; ost << _phone_number << endl; ost << _email_address << endl;
+    ost << "4" << endl;ost << _name << endl; ost << _customer_number << endl; ost << _phone_number << endl; ost << _email_address << endl;
     }
 
 };
@@ -252,7 +260,7 @@ public:
 
     void save(ofstream& ost)
     {
-    ost << _name << endl; ost << _employee_number << endl;
+    ost << "5"<< endl;ost << _name << endl; ost << _employee_number << endl;
     }
 
     string name() const {return _name;}
@@ -293,7 +301,7 @@ public:
 
     void save(ofstream& ost)
     {
-    ost << _order_number << endl; ost << _date << endl; ost << _customer << endl; ost << _sale_associate << endl; ost << _model << endl; ost << _status << endl;
+    ost <<"6"<<endl;ost << _order_number << endl; ost << _date << endl; ost << _customer << endl; ost << _sale_associate << endl; ost << _model << endl; ost << _status << endl;
     }
 
 };
