@@ -2,6 +2,7 @@
 #define _ROBOT_PART 2017
 #include <string>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class Robot_part {
@@ -29,7 +30,12 @@ class Head : public Robot_part {
        : Robot_part(description, cost, model_number, name),
          _power{power} { }
     double power() const {return _power;}
-   // double cost() const {return _cost;}
+    void save(ofstream& ost)
+    { ost.open("robot.txt",ios_base::app);
+    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _power << endl;
+    ost.close();
+    }
+
   private:
     double _power;
 };
@@ -52,7 +58,11 @@ class Locomotor : public Robot_part {
             : Robot_part(description, cost, model_number, name),
               _max_power{max_power} { }
     double max_power() const {return _max_power;}
-   // double cost() const {return _cost;}
+   void save(ofstream& ost)
+    { ost.open("robot.txt",ios_base::app);
+    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
+    ost.close();
+    }
   private:
     double _max_power;
 };
@@ -75,7 +85,11 @@ class Arm : public Robot_part {
       : Robot_part(description, cost, model_number, name),
         _max_power{max_power} { }
     double max_power() const {return _max_power;}
-   // double cost() const {return _cost;}
+   void save(ofstream& ost)
+    { ost.open("robot.txt",ios_base::app);
+    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
+    ost.close();
+    }
   private:
     double _max_power;
 };
@@ -101,6 +115,12 @@ class Torso : public Robot_part {
           _battery_compartments{battery_compartments} { }
     int max_arms() const {return _max_arms;}
     int battery_compartments() const {return _battery_compartments;}
+  void save(ofstream& ost)
+    { ost.open("robot.txt",ios_base::app);
+    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_arms << endl; ost << _battery_compartments << endl;
+    ost.close();
+    }
+
   private:
     int _max_arms;
     int _battery_compartments;
@@ -128,6 +148,12 @@ class Battery : public Robot_part {
             _power_available{power_available} { }
     double max_energy() const {return _max_energy;}
     double power_available() const {return _power_available;}
+  void save(ofstream& ost)
+    { ost.open("robot.txt",ios_base::app);
+    ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_energy << endl; ost <<_power_available <<endl;
+    ost.close();
+    }
+
   private:
     double _max_energy;
     double _power_available;
@@ -156,6 +182,11 @@ class Robot_model {
     double cost() const { double total_cost = _head.cost() + _arm.cost() + _torso.cost() + _locomotor.cost() + _battery.cost(); return total_cost;
 }
 
+void save(ofstream& ost)
+{
+ost.open("robot.txt",ios_base::app);
+ost << _name << endl; ost << _model_number << endl; ost << _head <<endl; ost << _torso << endl; ost << _arm << endl; ost << _locomotor << endl; ost << _battery << endl;
+}
   protected:
     string _name;
     int _model_number;
@@ -192,9 +223,23 @@ private:
 
 public:
 	Customer(string name, int customer_number,string phone_number,string email_address) : _name{name},_customer_number{customer_number},_phone_number{phone_number},_email_address{email_address} {}
+    string name() const { return _name;}
+    int customer_number() const {return _customer_number;}
+    string phone_number() const {return _phone_number;}
+    string email_address() const {return _email_address;}
 
+    void save(ofstream& ost)
+    {
+    ost << _name << endl; ost << _customer_number << endl; ost << _phone_number << endl; ost << _email_address << endl;
+    }
 
 };
+ostream& operator<< (ostream& ost, const Customer& customer) {
+  ost << "Customer " << customer.name() << " ( " <<customer.customer_number() << ") "
+     << "Phone: " << customer.phone_number() << " Email: " << customer.email_address() << endl;
+
+  return ost;
+}
 
 class Sale_associate
 {
@@ -205,7 +250,22 @@ private:
 public:
 	Sale_associate(string name, int employee_number): _name{name},_employee_number{employee_number}{}
 
+    void save(ofstream& ost)
+    {
+    ost << _name << endl; ost << _employee_number << endl;
+    }
+
+    string name() const {return _name;}
+    int employee_number() const {return _employee_number;}
 };
+
+
+ostream& operator<< (ostream& ost, const Sale_associate& sale_associate) {
+  ost << "Sale associate " << sale_associate.name() << " Employee n* " << sale_associate.employee_number() << endl;
+
+  return ost;
+}
+
 
 class Order
 {
@@ -224,7 +284,24 @@ public:
 	double robot_cost() {return _model.cost();}
 	double extended_price() {return _model.cost() * _order_number;}
 
+    int order_number() const {return _order_number;}
+    string date() const {return _date;}
+    Customer customer() const {return _customer;}
+    Sale_associate sale_associate() const {return _sale_associate;}
+    Robot_model model() const {return _model;}
+    int status() const {return _status;}
+
+    void save(ofstream& ost)
+    {
+    ost << _order_number << endl; ost << _date << endl; ost << _customer << endl; ost << _sale_associate << endl; ost << _model << endl; ost << _status << endl;
+    }
+
 };
 
+ostream& operator<< (ostream& ost, const Order& order) {
+  ost << "Order placed on " << order.date() << " By " << order.customer() << endl;
+
+  return ost;
+}
 
 #endif

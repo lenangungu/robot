@@ -15,7 +15,7 @@ int main() {
   Customer *customer;
   Sale_associate *sale_associate;
   Order *order;
- \
+
 /*
   while(true) {
     switch (get_int(R"(
@@ -36,6 +36,10 @@ vector<Torso> torsos;
 vector<Arm> arms;
 vector<Battery> batteries;
 vector<Locomotor> locomotors;
+vector<Customer> customers;
+vector<Sale_associate> sale_associates;
+vector<Order> orders;
+ofstream ost;
 
 int option;
 int part;
@@ -126,6 +130,7 @@ cin.ignore();
 
 
  model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
+model->save(ost);
 models.push_back(*model);
 
 break;
@@ -157,6 +162,7 @@ do{
           get_double("Enter this head's power: ")
         };
         cout << *head << endl;
+        head->save(ost);
         heads.push_back(*head);
         break;
       case 2:
@@ -168,6 +174,7 @@ do{
           get_double("Enter maximum power: ")
         };
         cout << *arm << endl;
+        arm->save(ost);
         arms.push_back(*arm);
         break;
       case 3:
@@ -180,6 +187,7 @@ do{
           get_int("Enter maximum # of batteries (1 to 3): ", 1, 3)
         };
         cout << *torso << endl;
+        torso->save(ost);
         torsos.push_back(*torso);
         break;
       case 4:
@@ -191,6 +199,7 @@ do{
           get_double("Enter maximum power: ")
         };
         cout << *locomotor << endl;
+        locomotor->save(ost);
         locomotors.push_back(*locomotor);
         break;
       case 5:
@@ -203,6 +212,7 @@ do{
           get_double("Enter power available: ")
         };
         cout << *battery << endl;
+        battery->save(ost);
         batteries.push_back(*battery);
         break;
       default:
@@ -245,7 +255,8 @@ cout << "Email? " << endl;
 getline(cin,email_address);
 
 customer = new Customer(name,customer_number,phone_number,email_address);
-//customer
+customers.push_back(*customer);
+//customer->save(ost);
 break;
 }
 case 5:
@@ -259,7 +270,8 @@ cin >> employee_number;
 cin.ignore();
 
 sale_associate = new Sale_associate(name,employee_number);
-//sale associate
+sale_associates.push_back(*sale_associate);
+//sale_associate->save(ost);
 break;
 }
 
@@ -269,28 +281,62 @@ int order_number;
 string date;
 
 int status;
+int customer_i;
+int sale_i;
+int model_i;
 
 
-cin.ignore();
 cout << "date? "<< endl;
 getline(cin,date);
 cout<< "Choose customer: "<< endl;
 //get customers
+cout << *customer << endl;
+
+for (int i = 0; i < customers.size(); i++)
+{
+cout << i+1 << ")" << customers[i] << endl;
+
+}
+cin >> customer_i;
+cin.ignore();
 
 cout << "Choose associate" << endl;
-
 //diplay associate
+cout << *sale_associate << endl;
 
+for (int i = 0; i < sale_associates.size(); i++)
+{
+cout << i+1 << ")" << sale_associates[i] << endl;
+
+}
+cin >> sale_i;
+cin.ignore();
 cout << "Choose robot model" << endl;
+
 //display modes
+cout << "List of models: " <<  endl;
+  for(int i =0; i<models.size();i++)
+{
+cout << i+1 << ")" << models[i] << endl;
+
+}
+cout << endl;
+cin >> model_i;
+cin.ignore();
 
 cout << "How many of this model would you like? "<< endl;
 cin>>order_number;
+cin.ignore();
 
 cout << "status? " << endl;
 cin >> status;
 cin.ignore();
 
+order = new Order(order_number,date,customers[customer_i-1],sale_associates[sale_i-1],models[model_i-1],status);
+order->save(ost);
+orders.push_back(*order);
+cout << "****Order created****" << endl;
+cout << endl;
 break;
 
 //order
