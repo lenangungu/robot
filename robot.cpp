@@ -704,14 +704,19 @@ case 4:
     locomotors.push_back(*locomotor);
     break;
     
- 
     
-   /*
+case 5:
+    battery = new Battery{
+        fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", ""))
+        
+    };
+    
+ 
     cout << *battery << endl;
         battery->save(ost);
         batteries.push_back(*battery);
         break;
-     */
+    
     
       default:
         cerr << "Impossible menu selection ===" << endl << endl;
