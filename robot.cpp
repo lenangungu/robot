@@ -673,11 +673,24 @@ do{
         head->save(ost);
         heads.push_back(*head);
         break;
-
-        cout << *battery << endl;
+    
+case 2:
+    arm = new Arm{
+        fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ",""))
+        
+    };
+    cout << *arm << endl;
+    arm->save(ost);
+    arms.push_back(*arm);
+    break;
+    
+    /*
+    cout << *battery << endl;
         battery->save(ost);
         batteries.push_back(*battery);
         break;
+     */
+    
       default:
         cerr << "Impossible menu selection ===" << endl << endl;
 
