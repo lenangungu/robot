@@ -683,8 +683,30 @@ case 2:
     arm->save(ost);
     arms.push_back(*arm);
     break;
+case 3:
+    torso = new Torso{
+        
+        fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): "))
+        
+    };
+    cout << *torso << endl;
+    torso->save(ost);
+    torsos.push_back(*torso);
+    break;
     
-    /*
+case 4:
+    locomotor = new Locomotor{
+        fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ",""))
+        
+    };
+    cout << *locomotor << endl;
+    locomotor->save(ost);
+    locomotors.push_back(*locomotor);
+    break;
+    
+ 
+    
+   /*
     cout << *battery << endl;
         battery->save(ost);
         batteries.push_back(*battery);
