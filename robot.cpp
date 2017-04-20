@@ -563,13 +563,11 @@ switch (option)
 {
 case 1:
 
+model_name = fl_input("Enter the Model's name","");
 
-cout << "Enter the Model's name" << endl;
-getline(cin,model_name);
+model_number = atoi(fl_input("Enter the model's number",""));
 
-cout << "Enter the model's number" << endl;
-cin >> model_number;
-cin.ignore();
+
 
 // HEADS
 int head_i;
@@ -673,51 +671,43 @@ do{
         head->save(ost);
         heads.push_back(*head);
         break;
-    
-case 2:
-    arm = new Arm{
-        fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ",""))
-        
-    };
-    cout << *arm << endl;
-    arm->save(ost);
-    arms.push_back(*arm);
-    break;
-case 3:
-    torso = new Torso{
-        
-        fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): "))
-        
-    };
-    cout << *torso << endl;
-    torso->save(ost);
-    torsos.push_back(*torso);
-    break;
-    
-case 4:
-    locomotor = new Locomotor{
-        fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ",""))
-        
-    };
-    cout << *locomotor << endl;
-    locomotor->save(ost);
-    locomotors.push_back(*locomotor);
-    break;
-    
-    
-case 5:
-    battery = new Battery{
-        fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", ""))
-        
-    };
-    
- 
-    cout << *battery << endl;
+      case 2:
+        arm = new Arm{
+              fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ",""))
+
+        };
+        cout << *arm << endl;
+        arm->save(ost);
+        arms.push_back(*arm);
+        break;
+      case 3:
+        torso = new Torso{
+
+fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): "))
+
+        };
+        cout << *torso << endl;
+        torso->save(ost);
+        torsos.push_back(*torso);
+        break;
+      case 4:
+        locomotor = new Locomotor{
+                 fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ",""))
+
+        };
+        cout << *locomotor << endl;
+        locomotor->save(ost);
+        locomotors.push_back(*locomotor);
+        break;
+      case 5:
+        battery = new Battery{
+                fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", ""))
+
+        };
+        cout << *battery << endl;
         battery->save(ost);
         batteries.push_back(*battery);
         break;
-    
-    
       default:
         cerr << "Impossible menu selection ===" << endl << endl;
 
@@ -850,6 +840,7 @@ break;
 
 win->end();
  // }while(option != 9);
+ return Fl::run();
 }
 
 
