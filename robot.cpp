@@ -1,6 +1,6 @@
 
 #include <vector>
-
+#include <string>
 //#include "utility.h"
 #include <climits>
 #include <exception>
@@ -424,6 +424,8 @@ double get_double(istream& ist) {
 }
 
 
+
+
 int main() {
 
  Fl_Window *win = new Fl_Window(600,500, "Robot Shop");
@@ -562,7 +564,7 @@ cin.ignore();
 switch (option)
 {
 case 1:
-
+{
 model_name = fl_input("Enter the Model's name","");
 
 model_number = atoi(fl_input("Enter the model's number",""));
@@ -571,16 +573,20 @@ model_number = atoi(fl_input("Enter the model's number",""));
 
 // HEADS
 int head_i;
-cout << "Enter number of the head to add to your model" << endl;
-cout << "Heads: " << endl;
+string headss;
+
 
 for (int i = 0; i < heads.size(); i++)
 {
-cout << i+1 << ")" << heads[i] << endl;
+headss += i+1;
+  headss += heads[i].name();
 
 }
-cin >> head_i;
-cin.ignore();
+
+//cout << i+1 << ")" << heads[i] << endl;
+
+head_i = atoi(fl_input(headss.c_str(),""));
+
 
 //TORSOS
 int torso_i;
@@ -641,7 +647,7 @@ models.push_back(*model);
 
 break;
 
-
+}
 //
 
 case 2:
