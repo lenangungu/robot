@@ -1,7 +1,8 @@
 
 #include <vector>
 #include <string>
-//#include "utility.h"
+#include <FL/Fl_Shared_Image.H>
+#include <FL/Fl_JPEG_Image.H>
 #include <climits>
 #include <exception>
 #include <FL/Fl.H>
@@ -9,7 +10,7 @@
 #include <FL/Fl_Input.H>
 #include <cstdlib>
 #include <FL/Fl_Window.H>
-
+#include <FL/Fl_Menu_Bar.H>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -423,6 +424,65 @@ double get_double(istream& ist) {
   return result;
 }
 
+void HeadCB(Fl_Widget *w, void *p) {
+cout << "hi";}
+/*
+// HEADS
+int head_i;
+string headss;
+
+
+for (int i = 0; i < heads.size(); i++)
+{
+headss += i+1;
+  headss += heads[i].name();
+
+}
+
+head_i = atoi(fl_input(headss.c_str(),""));
+
+*/
+
+ void ArmCB(Fl_Widget *w, void *p) {
+ cout << "hi";
+ }
+ void TorsoCB(Fl_Widget *w, void *p) {
+   cout << "hi";
+}
+void LocomotorCB(Fl_Widget *w, void *p) {
+cout << "hi";
+}
+
+void BatteryCB(Fl_Widget *w, void *p) {
+cout << "hi";
+}
+
+void ModelCB(Fl_Widget *w, void *p) {
+cout << "hi";
+}
+
+void ExitCB(Fl_Widget *w, void *p) {
+cout << "hi";
+}
+
+Fl_Menu_Item menuitems[] = {
+
+{"&Create",0,0,0,FL_SUBMENU},
+{"&Robot Model", FL_ALT + 'm',(Fl_Callback *)ModelCB},
+
+{ "&Robot part", 0,0,0,FL_SUBMENU},
+{"&Head", FL_ALT + 'h', (Fl_Callback *)HeadCB},
+{"&Arm", FL_ALT + 'a', (Fl_Callback *)ArmCB},
+{"&Torso", FL_ALT + 't', (Fl_Callback *)TorsoCB},
+{"&Locomotor", FL_ALT + 'l', (Fl_Callback *)LocomotorCB},
+{"&Battery", FL_ALT + 'b', (Fl_Callback *)BatteryCB},
+
+{0},
+{"&Exit", FL_ALT + 'e', (Fl_Callback*)ExitCB},
+
+{0},
+{0}
+};
 
 
 
@@ -430,8 +490,12 @@ int main() {
 
  Fl_Window *win = new Fl_Window(600,500, "Robot Shop");
  win->color(FL_WHITE);
-win->show();
 
+fl_register_images();
+
+Fl_Menu_Bar *menubar = new Fl_Menu_Bar(0,0,600,30);
+menubar->menu(menuitems);
+win->show();
   Head *head;
   Arm *arm;
   Torso *torso;
@@ -548,6 +612,7 @@ break;}
 ist.close();
 
 
+/*
 string str = fl_input("1) Create a model \n2) Create parts\n3) List models\n4) Create a customer\n5) Create a sale associate\n6) Create an order\n9) Exit","");
 
     int option = atoi(str.c_str());
@@ -837,6 +902,7 @@ break;
 }
 
 }
+*/
 
 win->end();
  return Fl::run();
