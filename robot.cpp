@@ -546,20 +546,14 @@ break;}
 }
 }while(!ist.eof());
 ist.close();
-//fl_message("%s","1) Create a model '\n'2)Create parts'\n'3)List models'\n'4)Create a customer'\n'5)Create a sale associate'\n'6)Create an order'\n'9)Exit");
+
 
 string str = fl_input("1) Create a model \n2) Create parts\n3) List models\n4) Create a customer\n5) Create a sale associate\n6) Create an order\n9) Exit","");
 
     int option = atoi(str.c_str());
 
 
-/*
-do
-{
-cout << "1) Create a Model" << endl << "2) Create parts" << endl << "3) List models" << endl << "4) Create a customer"<< endl<< "5) Create a sale associate" << endl<< "6) Create an order" <<endl<<"9) to exit" << endl;
-cin >> option;
-cin.ignore();
-*/
+
 
 switch (option)
 {
@@ -583,65 +577,68 @@ headss += i+1;
 
 }
 
-//cout << i+1 << ")" << heads[i] << endl;
-
 head_i = atoi(fl_input(headss.c_str(),""));
 
 
 //TORSOS
 int torso_i;
-cout << "Enter number of the torso to add to your model" << endl;
-cout << "Torsos: " << endl;
+string torsoss;
+
 
 for (int i = 0; i < torsos.size(); i++)
 {
-cout << i+1 << ")" << torsos[i] << endl;
+torsoss += i+1;
+  torsoss += torsos[i].name();
 
 }
-cin >> torso_i;
-cin.ignore();
+
+torso_i = atoi(fl_input(torsoss.c_str(),""));
+
 
 //ARMS
 int arm_i;
-cout << "Enter number of the arm to add to your model" << endl;
-cout << "Arms: " << endl;
+string armss;
+
 
 for (int i = 0; i < arms.size(); i++)
 {
-cout << i+1 << ")" << arms[i] << endl;
+armss += i+1;
+  armss += arms[i].name();
 
 }
-cin >> arm_i;
-cin.ignore();
+
+arm_i = atoi(fl_input(armss.c_str(),""));
 
 //Battery
 int battery_i;
-cout << "Enter number of the battery to add to your model" << endl;
-cout << "Batteries: " << endl;
+string batteriess;
+
 
 for (int i = 0; i < batteries.size(); i++)
 {
-cout << i+1 << ")" << batteries[i] << endl;
+batteriess += i+1;
+  batteriess += batteries[i].name();
 
 }
-cin >> battery_i;
-cin.ignore();
+
+battery_i = atoi(fl_input(batteriess.c_str(),""));
 
 //LOCOMOTORS
 int locomotor_i;
-cout << "Enter number of the locomotor to add to your model" << endl;
-cout << "Locomotors: " << endl;
+string locomotorss;
+
 
 for (int i = 0; i < locomotors.size(); i++)
 {
-cout << i+1 << ")" << locomotors[i] << endl;
+locomotorss += i+1;
+  locomotorss += locomotors[i].name();
 
 }
-cin >> locomotor_i;
-cin.ignore();
+
+locomotor_i = atoi(fl_input(locomotorss.c_str(),""));
 
 
- model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
+model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
 model->save(ost);
 models.push_back(*model);
 
@@ -653,20 +650,18 @@ break;
 case 2:
 {
 
-
-//fl_message("%s","1) Head \n2) Arm\n3) Torso\n4) Locomotor\n5)Battery\n");
-
 string str = fl_input("1) Head \n2) Arm\n3) Torso\n4) Locomotor\n5)Battery\n","");
 
     int part = atoi(str.c_str());
 
 
+
+
 switch (part)
 {
-do{
 
-      case 0: // Exit
-        exit(0);
+      //case 0: // Exit
+       // break;
       case 1: // Head
         head = new Head{
 
@@ -717,8 +712,7 @@ fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(f
       default:
         cerr << "Impossible menu selection ===" << endl << endl;
 
-  }while(part !=0);
-  }
+}
   break;
   }
 
@@ -845,7 +839,6 @@ break;
 }
 
 win->end();
- // }while(option != 9);
  return Fl::run();
 }
 
