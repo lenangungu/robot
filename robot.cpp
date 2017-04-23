@@ -424,9 +424,93 @@ double get_double(istream& ist) {
   return result;
 }
 
+Head *head;
+  Arm *arm;
+  Torso *torso;
+  Locomotor *locomotor;
+  Battery *battery;
+  Robot_model *model;
+  Customer *customer;
+  Sale_associate *sale_associate;
+  Order *order;
+
+
+vector <Robot_model> models;
+vector<Head> heads;
+vector<Torso> torsos;
+vector<Arm> arms;
+vector<Battery> batteries;
+vector<Locomotor> locomotors;
+vector<Customer> customers;
+vector<Sale_associate> sale_associates;
+vector<Order> orders;
+ofstream ost;
+ifstream ist;
+
+string model_name;
+int model_number;
+
 void HeadCB(Fl_Widget *w, void *p) {
-cout << "hi";}
-/*
+
+ head = new Head{
+
+          fl_input("Head's name: ",""),atoi(fl_input("Head's model number: ","")),atof(fl_input("Head's cost: ","")),fl_input("Head's description: ",""),atof(fl_input("Head's power: ",""))
+
+        };
+        cout << *head << endl;
+        head->save(ost);
+        heads.push_back(*head);
+
+
+}
+
+ void ArmCB(Fl_Widget *w, void *p) {
+arm = new Arm{
+              fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ",""))
+
+        };
+        cout << *arm << endl;
+        arm->save(ost);
+        arms.push_back(*arm);
+ }
+ void TorsoCB(Fl_Widget *w, void *p) {
+   torso = new Torso{
+
+fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): "))
+
+        };
+        cout << *torso << endl;
+        torso->save(ost);
+        torsos.push_back(*torso);
+}
+void LocomotorCB(Fl_Widget *w, void *p) {
+locomotor = new Locomotor{
+                 fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ",""))
+
+        };
+        cout << *locomotor << endl;
+        locomotor->save(ost);
+        locomotors.push_back(*locomotor);
+}
+
+void BatteryCB(Fl_Widget *w, void *p) {
+battery = new Battery{
+                fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", ""))
+
+        };
+        cout << *battery << endl;
+        battery->save(ost);
+        batteries.push_back(*battery);
+}
+
+void ModelCB(Fl_Widget *w, void *p) {
+
+model_name = fl_input("Enter the Model's name","");
+
+model_number = atoi(fl_input("Enter the model's number",""));
+
+
+
 // HEADS
 int head_i;
 string headss;
@@ -434,36 +518,85 @@ string headss;
 
 for (int i = 0; i < heads.size(); i++)
 {
-headss += i+1;
+headss += to_string(i+1) + ") ";
   headss += heads[i].name();
+  headss += "\n";
 
 }
 
 head_i = atoi(fl_input(headss.c_str(),""));
 
-*/
 
- void ArmCB(Fl_Widget *w, void *p) {
- cout << "hi";
- }
- void TorsoCB(Fl_Widget *w, void *p) {
-   cout << "hi";
-}
-void LocomotorCB(Fl_Widget *w, void *p) {
-cout << "hi";
-}
+//TORSOS
+int torso_i;
+string torsoss;
 
-void BatteryCB(Fl_Widget *w, void *p) {
-cout << "hi";
+
+for (int i = 0; i < torsos.size(); i++)
+{
+torsoss += to_string(i+1) + ") ";
+  torsoss += torsos[i].name();
+ torsoss += "\n";
 }
 
-void ModelCB(Fl_Widget *w, void *p) {
-cout << "hi";
+torso_i = atoi(fl_input(torsoss.c_str(),""));
+
+
+//ARMS
+int arm_i;
+string armss;
+
+
+for (int i = 0; i < arms.size(); i++)
+{
+armss += to_string(i+1) + ") " ;
+  armss += arms[i].name();
+armss += "\n";
 }
+
+arm_i = atoi(fl_input(armss.c_str(),""));
+
+//Battery
+int battery_i;
+string batteriess;
+
+
+for (int i = 0; i < batteries.size(); i++)
+{
+batteriess += to_string(i+1) + ") ";
+  batteriess += batteries[i].name();
+batteriess += "\n";
+}
+
+battery_i = atoi(fl_input(batteriess.c_str(),""));
+
+//LOCOMOTORS
+int locomotor_i;
+string locomotorss;
+
+
+for (int i = 0; i < locomotors.size(); i++)
+{
+locomotorss += to_string(i+1) + ") ";
+  locomotorss += locomotors[i].name();
+locomotorss += "\n";
+}
+
+locomotor_i = atoi(fl_input(locomotorss.c_str(),""));
+
+
+model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
+model->save(ost);
+models.push_back(*model);
+
+}
+
 
 void ExitCB(Fl_Widget *w, void *p) {
-cout << "hi";
+exit(0);
 }
+
+
 
 Fl_Menu_Item menuitems[] = {
 
@@ -496,33 +629,10 @@ fl_register_images();
 Fl_Menu_Bar *menubar = new Fl_Menu_Bar(0,0,600,30);
 menubar->menu(menuitems);
 win->show();
-  Head *head;
-  Arm *arm;
-  Torso *torso;
-  Locomotor *locomotor;
-  Battery *battery;
-  Robot_model *model;
-  Customer *customer;
-  Sale_associate *sale_associate;
-  Order *order;
 
-
-vector <Robot_model> models;
-vector<Head> heads;
-vector<Torso> torsos;
-vector<Arm> arms;
-vector<Battery> batteries;
-vector<Locomotor> locomotors;
-vector<Customer> customers;
-vector<Sale_associate> sale_associates;
-vector<Order> orders;
-ofstream ost;
-ifstream ist;
 
 
 int part;
-string model_name;
-int model_number;
 
 ist.open("robot.txt");
 
@@ -612,297 +722,6 @@ break;}
 ist.close();
 
 
-/*
-string str = fl_input("1) Create a model \n2) Create parts\n3) List models\n4) Create a customer\n5) Create a sale associate\n6) Create an order\n9) Exit","");
-
-    int option = atoi(str.c_str());
-
-
-
-
-switch (option)
-{
-case 1:
-{
-model_name = fl_input("Enter the Model's name","");
-
-model_number = atoi(fl_input("Enter the model's number",""));
-
-
-
-// HEADS
-int head_i;
-string headss;
-
-
-for (int i = 0; i < heads.size(); i++)
-{
-headss += i+1;
-  headss += heads[i].name();
-
-}
-
-head_i = atoi(fl_input(headss.c_str(),""));
-
-
-//TORSOS
-int torso_i;
-string torsoss;
-
-
-for (int i = 0; i < torsos.size(); i++)
-{
-torsoss += i+1;
-  torsoss += torsos[i].name();
-
-}
-
-torso_i = atoi(fl_input(torsoss.c_str(),""));
-
-
-//ARMS
-int arm_i;
-string armss;
-
-
-for (int i = 0; i < arms.size(); i++)
-{
-armss += i+1;
-  armss += arms[i].name();
-
-}
-
-arm_i = atoi(fl_input(armss.c_str(),""));
-
-//Battery
-int battery_i;
-string batteriess;
-
-
-for (int i = 0; i < batteries.size(); i++)
-{
-batteriess += i+1;
-  batteriess += batteries[i].name();
-
-}
-
-battery_i = atoi(fl_input(batteriess.c_str(),""));
-
-//LOCOMOTORS
-int locomotor_i;
-string locomotorss;
-
-
-for (int i = 0; i < locomotors.size(); i++)
-{
-locomotorss += i+1;
-  locomotorss += locomotors[i].name();
-
-}
-
-locomotor_i = atoi(fl_input(locomotorss.c_str(),""));
-
-
-model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
-model->save(ost);
-models.push_back(*model);
-
-break;
-
-}
-//
-
-case 2:
-{
-
-string str = fl_input("1) Head \n2) Arm\n3) Torso\n4) Locomotor\n5)Battery\n","");
-
-    int part = atoi(str.c_str());
-
-
-
-
-switch (part)
-{
-
-      //case 0: // Exit
-       // break;
-      case 1: // Head
-        head = new Head{
-
-          fl_input("Head's name: ",""),atoi(fl_input("Head's model number: ","")),atof(fl_input("Head's cost: ","")),fl_input("Head's description: ",""),atof(fl_input("Head's power: ",""))
-
-        };
-        cout << *head << endl;
-        head->save(ost);
-        heads.push_back(*head);
-        break;
-      case 2:
-        arm = new Arm{
-              fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ",""))
-
-        };
-        cout << *arm << endl;
-        arm->save(ost);
-        arms.push_back(*arm);
-        break;
-      case 3:
-        torso = new Torso{
-
-fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): "))
-
-        };
-        cout << *torso << endl;
-        torso->save(ost);
-        torsos.push_back(*torso);
-        break;
-      case 4:
-        locomotor = new Locomotor{
-                 fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ",""))
-
-        };
-        cout << *locomotor << endl;
-        locomotor->save(ost);
-        locomotors.push_back(*locomotor);
-        break;
-      case 5:
-        battery = new Battery{
-                fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", ""))
-
-        };
-        cout << *battery << endl;
-        battery->save(ost);
-        batteries.push_back(*battery);
-        break;
-      default:
-        cerr << "Impossible menu selection ===" << endl << endl;
-
-}
-  break;
-  }
-
-  case 3:
-
-  {
-  cout << "List of models: " <<  endl;
-  for(int i =0; i<models.size();i++)
-{
-cout << models[i];
-cout << endl;
-}
-cout << endl;
-break;
-}
-
-case 4:
-{
-
-string name;
-int customer_number;
-string phone_number;
-string email_address;
-cout << "What's your name?" << endl;
-getline(cin,name);
-
-cout << "Customer number?" << endl;
-cin >> customer_number;
-cin.ignore();
-cout<< "Phone number? "<<endl;
-getline(cin,phone_number);
-cout << "Email? " << endl;
-getline(cin,email_address);
-
-customer = new Customer(name,customer_number,phone_number,email_address);
-customers.push_back(*customer);
-//customer->save(ost);
-break;
-}
-case 5:
-{
-string name;
-int employee_number;
-cout << "What's your name? "<<endl;
-getline(cin,name);
-cout << "Employee number? " << endl;
-cin >> employee_number;
-cin.ignore();
-
-sale_associate = new Sale_associate(name,employee_number);
-sale_associates.push_back(*sale_associate);
-//sale_associate->save(ost);
-break;
-}
-
-case 6:
-{
-int order_number;
-string date;
-
-int status;
-int customer_i;
-int sale_i;
-int model_i;
-
-
-cout << "date? "<< endl;
-getline(cin,date);
-cout<< "Choose customer: "<< endl;
-//get customers
-cout << *customer << endl;
-
-for (int i = 0; i < customers.size(); i++)
-{
-cout << i+1 << ")" << customers[i] << endl;
-
-}
-cin >> customer_i;
-cin.ignore();
-
-cout << "Choose associate" << endl;
-//diplay associate
-cout << *sale_associate << endl;
-
-for (int i = 0; i < sale_associates.size(); i++)
-{
-cout << i+1 << ")" << sale_associates[i] << endl;
-
-}
-cin >> sale_i;
-cin.ignore();
-cout << "Choose robot model" << endl;
-
-//display modes
-cout << "List of models: " <<  endl;
-  for(int i =0; i<models.size();i++)
-{
-cout << i+1 << ")" << models[i] << endl;
-
-}
-cout << endl;
-cin >> model_i;
-cin.ignore();
-
-cout << "How many of this model would you like? "<< endl;
-cin>>order_number;
-cin.ignore();
-
-cout << "status? " << endl;
-cin >> status;
-cin.ignore();
-
-order = new Order(order_number,date,customers[customer_i-1],sale_associates[sale_i-1],models[model_i-1],status);
-order->save(ost);
-orders.push_back(*order);
-cout << "****Order created****" << endl;
-cout << endl;
-break;
-
-//order
-
-}
-
-}
-*/
 
 win->end();
  return Fl::run();
