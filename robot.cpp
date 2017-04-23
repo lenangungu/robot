@@ -24,11 +24,13 @@ class Robot_part {
     int model_number() const {return _model_number;}
     double cost() const {return _cost;}
     string description() const {return _description;}
+    double weight() const {return _weight;}
   protected:
     string _name;
     int _model_number;
     double _cost;
     string _description;
+    double _weight;
 };
 
 class Head : public Robot_part {
@@ -37,7 +39,7 @@ class Head : public Robot_part {
          int model_number,
          double cost,
          string description,
-         double power)
+         double power, double weight)
        : Robot_part(description, cost, model_number, name),
          _power{power} { }
 /*
@@ -50,7 +52,7 @@ class Head : public Robot_part {
     double power() const {return _power;}
     void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << "2"<<endl; ost <<"1"<<endl; ost<<_name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _power << endl;
+    ost << "2"<<endl; ost <<"1"<<endl; ost<<_name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _power << endl; ost << _weight<<endl;
     ost.close();
     }
 
@@ -72,13 +74,13 @@ class Locomotor : public Robot_part {
               int model_number,
               double cost,
               string description,
-              double max_power)
+              double max_power, double weight)
             : Robot_part(description, cost, model_number, name),
               _max_power{max_power} { }
     double max_power() const {return _max_power;}
    void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << "2"<<endl; ost <<"4"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
+    ost << "2"<<endl; ost <<"4"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;ost << _weight << endl;
     ost.close();
     }
   private:
@@ -99,13 +101,13 @@ class Arm : public Robot_part {
         int model_number,
         double cost,
         string description,
-        double max_power)
+        double max_power, double weight)
       : Robot_part(description, cost, model_number, name),
         _max_power{max_power} { }
     double max_power() const {return _max_power;}
    void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << "2"<<endl; ost <<"2"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;
+    ost << "2"<<endl; ost <<"2"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;ost << _weight<<endl;
     ost.close();
     }
   private:
@@ -127,7 +129,7 @@ class Torso : public Robot_part {
           double cost,
           string description,
           int max_arms,
-          int battery_compartments)
+          int battery_compartments,double weight)
         : Robot_part(description, cost, model_number, name),
           _max_arms{max_arms},
           _battery_compartments{battery_compartments} { }
@@ -135,7 +137,7 @@ class Torso : public Robot_part {
     int battery_compartments() const {return _battery_compartments;}
   void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << "2"<<endl; ost <<"3"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_arms << endl; ost << _battery_compartments << endl;
+    ost << "2"<<endl; ost <<"3"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_arms << endl; ost << _battery_compartments << endl; ost << _weight << endl;
     ost.close();
     }
 
@@ -160,7 +162,7 @@ class Battery : public Robot_part {
             double cost,
             string description,
             double max_energy,
-            double power_available)
+            double power_available,double weight)
           : Robot_part(description, cost, model_number, name),
             _max_energy{max_energy},
             _power_available{power_available} { }
@@ -168,7 +170,7 @@ class Battery : public Robot_part {
     double power_available() const {return _power_available;}
   void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
-    ost << "2"<<endl; ost <<"5"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_energy << endl; ost <<_power_available <<endl;
+    ost << "2"<<endl; ost <<"5"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_energy << endl; ost <<_power_available <<endl; ost << _weight <<endl;
     ost.close();
     }
 
@@ -454,7 +456,7 @@ void HeadCB(Fl_Widget *w, void *p) {
 
  head = new Head{
 
-          fl_input("Head's name: ",""),atoi(fl_input("Head's model number: ","")),atof(fl_input("Head's cost: ","")),fl_input("Head's description: ",""),atof(fl_input("Head's power: ",""))
+          fl_input("Head's name: ",""),atoi(fl_input("Head's model number: ","")),atof(fl_input("Head's cost: ","")),fl_input("Head's description: ",""),atof(fl_input("Head's power: ","")), atof(fl_input("Head's weight: ", ""))
 
         };
         cout << *head << endl;
@@ -466,7 +468,7 @@ void HeadCB(Fl_Widget *w, void *p) {
 
  void ArmCB(Fl_Widget *w, void *p) {
 arm = new Arm{
-              fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ",""))
+              fl_input("Arm's name: ",""),atoi(fl_input("Arm's model number: ","")),atof(fl_input("Arm's cost: ","")),fl_input("Arm's description: ",""),atof(fl_input("Arm's max power: ","")), atof(fl_input("Arm's weight: ",""))
 
         };
         cout << *arm << endl;
@@ -476,7 +478,7 @@ arm = new Arm{
  void TorsoCB(Fl_Widget *w, void *p) {
    torso = new Torso{
 
-fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): "))
+fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(fl_input("Torso's cost: ","")),fl_input("Torso's description: ",""),atoi(fl_input("maximum # of arms (0 to 2): ","")),atoi(fl_input("Enter maximum # of batteries (1 to 3): ")), atof(fl_input("Torso's weight: ",""))
 
         };
         cout << *torso << endl;
@@ -485,7 +487,7 @@ fl_input("Torso's name: ",""),atoi(fl_input("Torso's model number: ","")),atof(f
 }
 void LocomotorCB(Fl_Widget *w, void *p) {
 locomotor = new Locomotor{
-                 fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ",""))
+                 fl_input("Locomotor's name: ",""),atoi(fl_input("Locomotor's model number: ","")),atof(fl_input("Locomotor's cost: ","")),fl_input("Locomotor's description: ",""),atof(fl_input("Locomotor's max power: ","")), atof(fl_input("Locomotor's weight: ",""))
 
         };
         cout << *locomotor << endl;
@@ -495,7 +497,7 @@ locomotor = new Locomotor{
 
 void BatteryCB(Fl_Widget *w, void *p) {
 battery = new Battery{
-                fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", ""))
+                fl_input("Battery's name: ",""),atoi(fl_input("Battery's model number: ","")),atof(fl_input("Battery's cost: ","")),fl_input("Battery's description: ",""),atof(fl_input("Battery's max energy: ","")), atof(fl_input("Battery's power available: ", "")),atof(fl_input("Battery's weight: ",""))
 
         };
         cout << *battery << endl;
@@ -647,11 +649,11 @@ case 1:
 string name = get_string(ist);
 int model_number = get_int(ist);
 head = new Head{
-get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
-torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist)};
-arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
-locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
-battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_double(ist),get_double(ist)};
+arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist),get_double(ist)};
 
 model = new Robot_model{name,model_number,*head,*torso,*arm,*locomotor,*battery};
 models.push_back(*model);
@@ -663,24 +665,24 @@ switch(get_int(ist))
 {
 case 1:{
 head = new Head{
-get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
 heads.push_back(*head);
 break;}
 
 case 2: {
-arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
 arms.push_back(*arm); break;}
 
 case 3:{
-torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist)};
+torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist),get_double(ist)};
 torsos.push_back(*torso); break;}
 
 case 4:{
-locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
+locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
 locomotors.push_back(*locomotor);break;}
 
 case 5: {
-battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist),get_double(ist)};
 batteries.push_back(*battery);break;}
 
 }
@@ -703,11 +705,11 @@ sale_associate = new Sale_associate{get_string(ist),get_int(ist)};
 string name = get_string(ist);
 int model_number = get_int(ist);
 head = new Head{
-get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
-torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist)};
-arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
-locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist)};
-battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+torso = new Torso{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_int(ist),get_int(ist),get_double(ist)};
+arm = new Arm{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+locomotor = new Locomotor{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist)};
+battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(ist),get_double(ist),get_double(ist),get_double(ist)};
 
 model = new Robot_model{name,model_number,*head,*torso,*arm,*locomotor,*battery};
 
