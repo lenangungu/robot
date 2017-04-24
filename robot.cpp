@@ -18,8 +18,8 @@ using namespace std;
 
 class Robot_part {
   public:
-    Robot_part(string description, double cost, int model_number, string name)
-        : _description{description}, _cost{cost}, _model_number{model_number}, _name{name} { }
+    Robot_part(string description, double cost, int model_number, string name,double weight)
+        : _description{description}, _cost{cost}, _model_number{model_number}, _name{name}, _weight{weight} { }
     string name() const {return _name;}
     int model_number() const {return _model_number;}
     double cost() const {return _cost;}
@@ -40,7 +40,7 @@ class Head : public Robot_part {
          double cost,
          string description,
          double power, double weight)
-       : Robot_part(description, cost, model_number, name),
+       : Robot_part(description, cost, model_number, name, weight),
          _power{power} { }
 /*
     Head override (ifstream& ist){
@@ -75,7 +75,7 @@ class Locomotor : public Robot_part {
               double cost,
               string description,
               double max_power, double weight)
-            : Robot_part(description, cost, model_number, name),
+            : Robot_part(description, cost, model_number, name, weight),
               _max_power{max_power} { }
     double max_power() const {return _max_power;}
    void save(ofstream& ost)
@@ -83,8 +83,10 @@ class Locomotor : public Robot_part {
     ost << "2"<<endl; ost <<"4"<<endl;ost << _name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _max_power << endl;ost << _weight << endl;
     ost.close();
     }
+    double max_speed() {return _max_speed;}
   private:
     double _max_power;
+    double _max_speed = 12;
 };
 
 ostream& operator<< (ostream& ost, const Locomotor& locomotor) {
@@ -102,7 +104,7 @@ class Arm : public Robot_part {
         double cost,
         string description,
         double max_power, double weight)
-      : Robot_part(description, cost, model_number, name),
+      : Robot_part(description, cost, model_number, name,weight),
         _max_power{max_power} { }
     double max_power() const {return _max_power;}
    void save(ofstream& ost)
@@ -130,7 +132,7 @@ class Torso : public Robot_part {
           string description,
           int max_arms,
           int battery_compartments,double weight)
-        : Robot_part(description, cost, model_number, name),
+        : Robot_part(description, cost, model_number, name, weight),
           _max_arms{max_arms},
           _battery_compartments{battery_compartments} { }
     int max_arms() const {return _max_arms;}
@@ -163,7 +165,7 @@ class Battery : public Robot_part {
             string description,
             double max_energy,
             double power_available,double weight)
-          : Robot_part(description, cost, model_number, name),
+          : Robot_part(description, cost, model_number, name, weight),
             _max_energy{max_energy},
             _power_available{power_available} { }
     double max_energy() const {return _max_energy;}
@@ -190,6 +192,9 @@ ostream& operator<< (ostream& ost, const Battery& battery) {
 
 class Robot_model {
   public:
+  bool p_limited;
+    double total_weight;
+    void weight () {cout << to_string(total_weight) << endl;}
     Robot_model(string name, int model_number, Head head, Torso torso, Arm arm , Locomotor locomotor, Battery battery)
         : _name{name}, _model_number{model_number}, _head{head}, _torso{torso},_arm{arm},_locomotor{locomotor},_battery{battery} { }
     string name() const {return _name;}
@@ -199,8 +204,16 @@ class Robot_model {
     void torso() const{cout << _torso << endl; cout << endl;}
     void locomotor() const{cout << _locomotor<< endl; cout << endl;}
     void battery() const{cout << _battery << endl; cout << endl;}
-    double cost() const { double total_cost = _head.cost() + _arm.cost() + _torso.cost() + _locomotor.cost() + _battery.cost(); return total_cost;
-}
+
+    double the_cost() const {return model_cost;}
+    void power_limited()
+     {
+    if ((_head.power() + _arm.max_power() + _locomotor.max_power()) > _battery.power_available())
+    {p_limited = true;}
+    else p_limited = false;
+
+     }
+
 
 void save(ofstream& ost)
 {
@@ -215,6 +228,10 @@ ost << "1"<<endl; ost << _name << endl; ost << _model_number << endl; ost << _he
     Torso _torso;
     Locomotor _locomotor;
     Battery _battery;
+private:
+double model_cost = _head.cost() + _arm.cost() + _torso.cost() + _locomotor.cost() + _battery.cost();
+double model_batlife = (_battery.max_energy() * 1000) / (_head.power() + (0.4*(_arm.max_power())) + (0.15 * (_locomotor.max_power())));
+double max_speed = _locomotor.max_speed() * ((_locomotor.weight() * 5)/total_weight);
 };
 
 
@@ -227,7 +244,7 @@ ostream& operator<< (ostream& ost, const Robot_model& model) {
      model.locomotor();
      model.battery();
 
-  ost << "Total cost of the model is: $"<< model.cost() << endl;
+  ost << "Total cost of the model is: $"<< model.the_cost() << endl;
 
 
   return ost;
@@ -301,8 +318,8 @@ private:
 public:
 	Order(int order_number,string date,Customer customer,Sale_associate sale_associate,Robot_model model,int status) : _order_number{order_number},_date{date},_customer{customer},_sale_associate{sale_associate},_model{model},_status{status} {}
 
-	double robot_cost() {return _model.cost();}
-	double extended_price() {return _model.cost() * _order_number;}
+	double robot_cost() {return _model.the_cost();}
+	double extended_price() {return _model.the_cost() * _order_number;}
 
     int order_number() const {return _order_number;}
     string date() const {return _date;}
@@ -588,7 +605,9 @@ locomotor_i = atoi(fl_input(locomotorss.c_str(),""));
 
 
 model= new Robot_model(model_name, model_number,heads[head_i-1],torsos[torso_i -1],arms[arm_i -1],locomotors[locomotor_i -1],batteries[battery_i -1]);
+model->total_weight = heads[head_i -1].weight() + torsos[torso_i -1].weight() + arms[arm_i -1].weight() +locomotors[locomotor_i -1].weight() + batteries[battery_i -1].weight();
 model->save(ost);
+model->weight();
 models.push_back(*model);
 
 }
