@@ -532,7 +532,7 @@ model_number = atoi(fl_input("Enter the model's number",""));
 
 // HEADS
 int head_i;
-string headss;
+string headss = "Choose a head: \n\n";
 
 
 for (int i = 0; i < heads.size(); i++)
@@ -548,7 +548,7 @@ head_i = atoi(fl_input(headss.c_str(),""));
 
 //TORSOS
 int torso_i;
-string torsoss;
+string torsoss = "Choose a torso:\n\n";
 
 
 for (int i = 0; i < torsos.size(); i++)
@@ -563,7 +563,7 @@ torso_i = atoi(fl_input(torsoss.c_str(),""));
 
 //ARMS
 int arm_i;
-string armss;
+string armss = "Choose an arm:\n\n";
 
 
 for (int i = 0; i < arms.size(); i++)
@@ -577,7 +577,7 @@ arm_i = atoi(fl_input(armss.c_str(),""));
 
 //Battery
 int battery_i;
-string batteriess;
+string batteriess = "Choose a battery:\n\n";
 
 
 for (int i = 0; i < batteries.size(); i++)
@@ -591,7 +591,7 @@ battery_i = atoi(fl_input(batteriess.c_str(),""));
 
 //LOCOMOTORS
 int locomotor_i;
-string locomotorss;
+string locomotorss = "Choose a locomotor:\n\n";
 
 
 for (int i = 0; i < locomotors.size(); i++)
