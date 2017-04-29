@@ -522,6 +522,8 @@ battery = new Battery{
         batteries.push_back(*battery);
 }
 
+
+
 void ModelCB(Fl_Widget *w, void *p) {
 
 model_name = fl_input("Enter the Model's name","");
@@ -611,8 +613,24 @@ model->weight();
 models.push_back(*model);
 
 }
+/*
+void Model_listCB(Fl_Widget *w, void *p) {
+
+string modelss = "";
 
 
+for (int i = 0; i < models.size(); i++)
+{
+modelss += to_string(i+1) + ") ";
+  modelss += models[i].name();
+  modelss += "\n";
+
+}
+
+ fl_message(modelss.c_str());
+
+}
+*/
 void ExitCB(Fl_Widget *w, void *p) {
 exit(0);
 }
@@ -632,8 +650,12 @@ Fl_Menu_Item menuitems[] = {
 {"&Battery", FL_ALT + 'b', (Fl_Callback *)BatteryCB},
 
 {0},
-{"&Exit", FL_ALT + 'e', (Fl_Callback*)ExitCB},
 
+{"&Exit", FL_ALT + 'e', (Fl_Callback*)ExitCB},
+{0},
+
+{"&View",0,0,0, FL_SUBMENU},
+{"&Robot Models", FL_ALT + 'm', (Fl_Callback *)HeadCB,
 {0},
 {0}
 };
