@@ -613,7 +613,7 @@ model->weight();
 models.push_back(*model);
 
 }
-/*
+
 void Model_listCB(Fl_Widget *w, void *p) {
 
 string modelss = "";
@@ -630,7 +630,7 @@ modelss += to_string(i+1) + ") ";
  fl_message(modelss.c_str());
 
 }
-*/
+
 void ExitCB(Fl_Widget *w, void *p) {
 exit(0);
 }
@@ -655,7 +655,7 @@ Fl_Menu_Item menuitems[] = {
 {0},
 
 {"&View",0,0,0, FL_SUBMENU},
-{"&Robot Models", FL_ALT + 'm', (Fl_Callback *)HeadCB,
+{"&Robot Models", FL_ALT + 'm', (Fl_Callback *)Model_listCB},
 {0},
 {0}
 };
