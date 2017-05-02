@@ -42,14 +42,10 @@ class Head : public Robot_part {
          double power, double weight)
        : Robot_part(description, cost, model_number, name, weight),
          _power{power} { }
-/*
-    Head override (ifstream& ist){
-    (ist.open("robot.txt"));
-    ist >> _name; ist >> _model_number; ist >> _cost; ist >> _description; ist>> _power;
-    Head(_name,_model_number,_cost,_description,_power);
-    }*/
+
 
     double power() const {return _power;}
+
     void save(ofstream& ost)
     { ost.open("robot.txt",ios_base::app);
     ost << "2"<<endl; ost <<"1"<<endl; ost<<_name << endl; ost << _model_number << endl; ost << _cost << endl;ost << _description << endl; ost << _power << endl; ost << _weight<<endl;
@@ -200,10 +196,10 @@ class Robot_model {
     string name() const {return _name;}
     int model_number() const {return _model_number;}
     void head() const{ cout << _head << endl;cout << endl;}
-    void arm() const{cout << _arm << endl; cout << endl;}
-    void torso() const{cout << _torso << endl; cout << endl;}
-    void locomotor() const{cout << _locomotor<< endl; cout << endl;}
-    void battery() const{cout << _battery << endl; cout << endl;}
+    void arm() const{cout << _arm<< endl; cout << endl;}
+    void torso() const{cout << _torso<< endl; cout << endl;}
+    void locomotor() const{cout << _locomotor << endl; cout << endl;}
+    void battery() const{cout << _battery<< endl; cout << endl;}
 
     double the_cost() const {return model_cost;}
     void power_limited()
@@ -244,7 +240,7 @@ ostream& operator<< (ostream& ost, const Robot_model& model) {
      model.locomotor();
      model.battery();
 
-  ost << "Total cost of the model is: $"<< model.the_cost() << endl;
+ost << "Total cost of the model is: $"<< model.the_cost() << endl;
 
 
   return ost;
@@ -616,11 +612,13 @@ models.push_back(*model);
 
 void Model_listCB(Fl_Widget *w, void *p) {
 
-string modelss = "";
+string modelss = "List of models: \n\n";
 
 
 for (int i = 0; i < models.size(); i++)
 {
+
+
 modelss += to_string(i+1) + ") ";
   modelss += models[i].name();
   modelss += "\n";
@@ -639,6 +637,10 @@ exit(0);
 
 Fl_Menu_Item menuitems[] = {
 
+{"&File",0,0,0, FL_SUBMENU},
+{"&Exit", FL_ALT + 'e', (Fl_Callback*)ExitCB},
+{0},
+
 {"&Create",0,0,0,FL_SUBMENU},
 {"&Robot Model", FL_ALT + 'm',(Fl_Callback *)ModelCB},
 
@@ -650,9 +652,8 @@ Fl_Menu_Item menuitems[] = {
 {"&Battery", FL_ALT + 'b', (Fl_Callback *)BatteryCB},
 
 {0},
-
-{"&Exit", FL_ALT + 'e', (Fl_Callback*)ExitCB},
 {0},
+
 
 {"&View",0,0,0, FL_SUBMENU},
 {"&Robot Models", FL_ALT + 'm', (Fl_Callback *)Model_listCB},
@@ -687,6 +688,8 @@ case 9:
 
 case 1:
 {
+
+//do{
 string name = get_string(ist);
 int model_number = get_int(ist);
 head = new Head{
@@ -698,6 +701,7 @@ battery = new Battery{get_string(ist),get_int(ist),get_double(ist),get_string(is
 
 model = new Robot_model{name,model_number,*head,*torso,*arm,*locomotor,*battery};
 models.push_back(*model);
+//} while (!ist.eof());
 break;}
 case 2:
 {
